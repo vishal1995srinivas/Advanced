@@ -10,7 +10,7 @@ const theme = {
 	lightgrey: '#E1E1E1',
 	offwhite: '#EDEDED',
 	maxWidth: '1000px',
-	bs: '0 12 px 24px 0 rgba(0,0,0,0.09)' //box-shadow
+	bs: '0 12px 24px 0 rgba(0,1,0,.09)' //box-shadow
 };
 const StyledPage = styled.div`
 	background-color: white;
