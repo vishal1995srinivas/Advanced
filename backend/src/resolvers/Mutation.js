@@ -1,6 +1,7 @@
 const Mutations = {
 	async createItem(parent, args, ctx, info) {
-		//TODO : Check if user is logged in
+		// TODO: Check if they are logged in
+
 		const item = await ctx.db.mutation.createItem(
 			{
 				data: {
@@ -10,14 +11,16 @@ const Mutations = {
 			info
 		);
 
+		console.log(item);
+
 		return item;
 	},
 	updateItem(parent, args, ctx, info) {
-		//first take a copy of updates
+		// first take a copy of the updates
 		const updates = { ...args };
-		//remove ID from the updates
+		// remove the ID from the updates
 		delete updates.id;
-		//run the update method
+		// run the update method
 		return ctx.db.mutation.updateItem(
 			{
 				data: updates,
