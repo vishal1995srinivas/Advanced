@@ -1,12 +1,9 @@
-import Link from 'next/link';
-import UpdateItem from '../components/CreateItem';
-const update = (props) => {
-	//Destructure props and == ({query}) with query.id inside
-	return (
-		<div>
-			<UpdateItem id={props.query.id} />
-		</div>
-	);
-};
+import UpdateItem from '../components/UpdateItem';
 
-export default update;
+const Sell = ({ query }) => (
+	<div>
+		<UpdateItem id={query.id} />
+	</div>
+);
+
+export default Sell;
