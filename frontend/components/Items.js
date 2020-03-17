@@ -17,7 +17,6 @@ const ALL_ITEMS_QUERY = gql`
 	}
 `;
 const Center = styled.div`text-align: center;`;
-
 const ItemsList = styled.div`
 	display: grid;
 	grid-template-columns: 1fr 1fr;
@@ -25,7 +24,6 @@ const ItemsList = styled.div`
 	max-width: ${(props) => props.theme.maxWidth};
 	margin: 0 auto;
 `;
-
 class Items extends Component {
 	render() {
 		return (
