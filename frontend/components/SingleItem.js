@@ -37,6 +37,8 @@ class SingleItem extends Component {
 					const item = data.item;
 					return (
 						<SingleItemStyles>
+							{/* Observe here we are changing title of the page .
+                            nextjs provides us the head where we can add anything and it collects everything and displays  */}
 							<Head>
 								<title>Sick Fits | {item.title}</title>
 							</Head>
