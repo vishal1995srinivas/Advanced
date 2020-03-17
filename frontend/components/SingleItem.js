@@ -13,6 +13,15 @@ const SingleItemStyles = styled.div`
 	grid-auto-columns: 1fr;
 	grid-auto-flow: column;
 	min-height: 800px;
+	img {
+		width: 100%;
+		height: 100%;
+		object-fit: contain; /*  try this with cover and contain */
+	}
+	.details {
+		margin: 3rem;
+		font-size: 2rem;
+	}
 `;
 
 const SINGLE_ITEM_QUERY = gql`
@@ -43,6 +52,10 @@ class SingleItem extends Component {
 								<title>Sick Fits | {item.title}</title>
 							</Head>
 							<img src={item.largeImage} alt={item.title} />
+							<div className="details">
+								<h2>Viewing {item.title}</h2>
+								<p>Description {item.description}</p>
+							</div>
 						</SingleItemStyles>
 					);
 				}}
