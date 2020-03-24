@@ -1,9 +1,22 @@
 import React from 'react';
 import PaginationStyles from './styles/PaginationStyles';
+import gql from 'graphql-tag';
+import { Query } from 'react-apollo';
+const PAGINATION_QUERY = gql`
+	query PAGINATION_QUERY {
+		itemsConnection {
+			aggregate {
+				count
+			}
+		}
+	}
+`;
 
 const Pagination = (props) => (
 	<PaginationStyles>
-		<p>Hi I'm pagination</p>
+		<Query query={PAGINATION_QUERY}>
+			{({ data, loading, error }) => <p>Hi I'm pagination {data.itemsConnection.aggregate.count}</p>}
+		</Query>
 	</PaginationStyles>
 );
 
