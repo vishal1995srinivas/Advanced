@@ -13,7 +13,6 @@ const SIGNUP_MUTATION = gql`
 		}
 	}
 `;
-
 class Signup extends Component {
 	state = {
 		name: '',
@@ -77,5 +76,4 @@ class Signup extends Component {
 		);
 	}
 }
-
 export default Signup;
