@@ -1,6 +1,6 @@
-enum Persmission {
+enum Permission {
 	ADMIN
-	USERITEMCREATE
+	USER
 	ITEMCREATE
 	ITEMUPDATE
 	ITEMDELETE
@@ -14,7 +14,7 @@ type User {
 	password: String!
 	resetToken: Float
 	resetTokenExpiry: Float
-	persmissions: [Persmission]
+	permissions: [Permission] @scalarList(strategy: RELATION)
 }
 
 type Item {
