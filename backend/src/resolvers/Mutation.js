@@ -103,12 +103,14 @@ const Mutations = {
 		//TODO:
 		// 1. Check if this is a real user
 		const user = await ctx.db.query.user({ where: { email: args.email } });
-
+		if (!user) {
+			throw new Error(`No such user found ${email}`);
+		}
 		// 2. Set a reset token and expiry on  that user.
 		const randomBytesPromisified = promisify(randomBytes);
 		const resetToken = (await randomBytesPromisified(20)).toString('hex');
 		const resetTokenExpiry = Date.now() + 3600000; //1ht from now
-		const res = ctx.db.mutation.updateUser({
+		const res = await ctx.db.mutation.updateUser({
 			where: { email: args.email },
 			data: { resetToken, resetTokenExpiry }
 		});
