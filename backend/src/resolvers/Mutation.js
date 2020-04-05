@@ -69,6 +69,7 @@ const Mutations = {
 		return user;
 	},
 	async signin(parent, { email, password }, ctx, info) {
+		//destructured args.email and args.password=> {email,password}
 		//TODO
 		// 1. check if there is a user with that email
 		const user = await ctx.db.query.user({ where: { email: email } });
@@ -84,8 +85,13 @@ const Mutations = {
 		const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
 
 		// 4. set the cookie with the token.
+		ctx.response.cookie('token', token, {
+			httpOnly: true,
+			maxAge: 1000 * 60 * 60 * 24 * 365 //Same as signin: Next time refactor it
+		});
 		// 5. return the user
-	} //destructured args.email and args.password=> {email,password}
+		return user;
+	}
 };
 
 module.exports = Mutations;
