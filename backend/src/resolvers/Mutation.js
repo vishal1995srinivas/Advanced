@@ -143,7 +143,7 @@ const Mutations = {
 			}
 		});
 		// Generate JWT
-
+		const token = jwt.sign({ userId: updatedUser.id }, process.env.APP_SECRET);
 		// Set the cookie
 		// Return the new user
 		// Thats it
