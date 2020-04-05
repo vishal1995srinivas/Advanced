@@ -81,6 +81,8 @@ const Mutations = {
 			throw new Error('Invalid Password');
 		}
 		// 3. generate jwt token
+		const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
+
 		// 4. set the cookie with the token.
 		// 5. return the user
 	} //destructured args.email and args.password=> {email,password}
