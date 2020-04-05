@@ -145,7 +145,12 @@ const Mutations = {
 		// Generate JWT
 		const token = jwt.sign({ userId: updatedUser.id }, process.env.APP_SECRET);
 		// Set the cookie
+		ctx.response.cookie('token', token, {
+			httpOnly: true,
+			maxAge: 1000 * 60 * 60 * 24 * 365
+		});
 		// Return the new user
+
 		// Thats it
 	}
 };
