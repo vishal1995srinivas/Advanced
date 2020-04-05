@@ -95,6 +95,13 @@ const Mutations = {
 	signout(parent, args, ctx, info) {
 		ctx.response.clearCookie('token');
 		return { message: 'Goodbye' };
+	},
+	async requestReset(parent, args, ctx, info) {
+		//TODO:
+		// 1. Check if this is a real user
+		const user = await ctx.db.query.user({ where: { email: args.email } });
+		// 2. Set a reset token and expiry on  that user.
+		// 3. Email them that reset token
 	}
 };
 
