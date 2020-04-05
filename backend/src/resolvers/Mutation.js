@@ -117,6 +117,20 @@ const Mutations = {
 		console.log(res);
 		return { message: 'Thanks!' };
 		// 3. Email them that reset token
+	},
+	async resetPassword(parent, args, ctx, info) {
+		//1. Check if the passwords match.
+		if (args.password !== args.confirmPassword) {
+			throw new Error("Passwords don't match");
+		}
+		//2. Check if its legit reset token
+		//3. Check if its expired.
+		//4. Hash their new password.
+		// 5. Save the new password to the user and remove old reset token fields.
+		// Generate JWT
+		// Set the cookie
+		// Return the new user
+		// Thats it
 	}
 };
 
