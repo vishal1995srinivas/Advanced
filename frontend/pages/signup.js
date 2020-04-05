@@ -1,4 +1,5 @@
 import SignUp from '../components/SignUp';
+import Signin from '../components/Signin';
 import styled from 'styled-components';
 const Columns = styled.div`
 	display: grid;
@@ -8,8 +9,7 @@ const Columns = styled.div`
 const SignUpPage = (props) => (
 	<Columns>
 		<SignUp />
-		<SignUp />
-		<SignUp />
+		<Signin />
 	</Columns>
 );
 export default SignUpPage;
