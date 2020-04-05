@@ -67,7 +67,20 @@ const Mutations = {
 
 		//TODO: Return user to the browser
 		return user;
-	}
+	},
+	async signin(parent, { email, password }, ctx, info) {
+		//TODO
+		// 1. check if there is a user with that email
+		const user = await ctx.db.query.user({ where: { email: email } });
+		if (!user) {
+			throw new Error(`No such user found ${email}`);
+		}
+		// 2. check if there password is correct
+
+		// 3. generate jwt token
+		// 4. set the cookie with the token.
+		// 5. return the user
+	} //destructured args.email and args.password=> {email,password}
 };
 
 module.exports = Mutations;
