@@ -1,7 +1,7 @@
-import { randomBytes } from 'crypto';
-import { promisify } from 'util';
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const { randomBytes } = require('crypto');
+const { promisify } = require('util');
 
 const Mutations = {
 	async createItem(parent, args, ctx, info) {
@@ -109,7 +109,7 @@ const Mutations = {
 		// 2. Set a reset token and expiry on  that user.
 		const randomBytesPromisified = promisify(randomBytes);
 		const resetToken = (await randomBytesPromisified(20)).toString('hex');
-		const resetTokenExpiry = Date.now() + 3600000; //1ht from now
+		const resetTokenExpiry = Date.now() + 3600000; //1hr from now
 		const res = await ctx.db.mutation.updateUser({
 			where: { email: args.email },
 			data: { resetToken, resetTokenExpiry }
@@ -150,7 +150,7 @@ const Mutations = {
 			maxAge: 1000 * 60 * 60 * 24 * 365
 		});
 		// Return the new user
-
+		return updatedUser;
 		// Thats it
 	}
 };
