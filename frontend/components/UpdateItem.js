@@ -26,7 +26,6 @@ const UPDATE_ITEM_MUTATION = gql`
 		}
 	}
 `;
-
 class UpdateItem extends Component {
 	state = {};
 	handleChange = (e) => {
