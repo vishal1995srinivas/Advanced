@@ -14,6 +14,14 @@ const Query = {
 			},
 			info
 		);
+	},
+	async users(parent, args, ctx, info) {
+		//1. Check if the user has signed in
+		if (!ctx.request.userId) {
+			throw new Error('You must be signed in');
+		}
+		//2. Check if the user has permissions to query all the users.
+		// 3. If they do, query all the users!
 	}
 };
 
