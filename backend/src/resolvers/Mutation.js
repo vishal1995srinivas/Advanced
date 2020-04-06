@@ -112,7 +112,7 @@ const Mutations = {
 			data: { resetToken, resetTokenExpiry }
 		});
 		const mailRes = await transport.sendMail({
-			from: 'info@smasc.in',
+			from: 'vishal1995srinivas@gmail.com',
 			to: user.email,
 			subject: 'Your Password Reset token',
 			html: makeANiceEmail(`Your Password Reset token is here!
