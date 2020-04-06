@@ -52,6 +52,9 @@ class User extends Component {
 	};
 	constructor(props) {
 		super(props);
+		this.state = {
+			permission: this.props.user.permissions
+		};
 	}
 	render() {
 		const user = this.props.user;
@@ -62,7 +65,7 @@ class User extends Component {
 				{Permission.map((permission) => (
 					<td key={permission}>
 						<label htmlFor={`${user.id}-permission-${permission}`}>
-							<input type="checkbox" />
+							<input type="checkbox" checked={this.state.permission.includes(permission)} />
 						</label>
 					</td>
 				))}
