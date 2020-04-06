@@ -56,6 +56,9 @@ class User extends Component {
 			permission: this.props.user.permissions
 		};
 	}
+	handleOnChangePermission = (e) => {
+		console.log(e.target);
+	};
 	render() {
 		const user = this.props.user;
 		return (
@@ -65,7 +68,12 @@ class User extends Component {
 				{Permission.map((permission) => (
 					<td key={permission}>
 						<label htmlFor={`${user.id}-permission-${permission}`}>
-							<input type="checkbox" checked={this.state.permission.includes(permission)} />
+							<input
+								type="checkbox"
+								checked={this.state.permission.includes(permission)}
+								value={permission}
+								onChange={this.handleOnChangePermission}
+							/>
 						</label>
 					</td>
 				))}
