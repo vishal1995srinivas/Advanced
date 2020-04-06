@@ -9,7 +9,6 @@ const Mutations = {
 		if (!ctx.request.userId) {
 			throw new Error('You must be logged in to perform this operation');
 		}
-
 		const item = await ctx.db.mutation.createItem(
 			{
 				data: {
@@ -26,7 +25,6 @@ const Mutations = {
 		);
 
 		console.log(item);
-
 		return item;
 	},
 	updateItem(parent, args, ctx, info) {
@@ -65,7 +63,7 @@ const Mutations = {
 				data: {
 					...args,
 					password,
-					permissions: { set: [ 'USER' ] }
+					permissions: { set: [ 'ADMIN' ] }
 				}
 			},
 			info
