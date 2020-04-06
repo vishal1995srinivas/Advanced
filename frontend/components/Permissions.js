@@ -4,6 +4,7 @@ import Error from './ErrorMessage';
 import gql from 'graphql-tag';
 import Table from './styles/Table';
 import SickButton from './styles/SickButton';
+import PropTypes from 'prop-types';
 const Permission = [ 'ADMIN', 'USER', 'ITEMCREATE', 'ITEMUPDATE', 'ITEMDELETE', 'PERMISSIONUPDATE' ];
 
 const ALL_USERS_QUERY = gql`
@@ -41,6 +42,14 @@ const Permissions = (props) => (
 );
 
 class User extends Component {
+	static propTypes = {
+		user: PropTypes.shape({
+			name: PropTypes.string,
+			id: PropTypes.string,
+			email: PropTypes.string,
+			permissions: PropTypes.string
+		}).isRequired
+	};
 	constructor(props) {
 		super(props);
 	}
@@ -57,6 +66,9 @@ class User extends Component {
 						</label>
 					</td>
 				))}
+				<td>
+					<SickButton>Update</SickButton>
+				</td>
 			</tr>
 		);
 	}
