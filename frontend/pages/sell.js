@@ -1,9 +1,12 @@
 import Link from 'next/link';
 import CreateItem from '../components/CreateItem';
+import PleaseSignIn from '../components/PleaseSignIn';
 function Sell() {
 	return (
 		<div>
-			<CreateItem />
+			<PleaseSignIn>
+				<CreateItem />
+			</PleaseSignIn>
 		</div>
 	);
 }
