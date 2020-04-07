@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Query } from 'react-apollo';
+import { Query, Mutation } from 'react-apollo';
 import Error from './ErrorMessage';
 import gql from 'graphql-tag';
 import Table from './styles/Table';
@@ -7,6 +7,16 @@ import SickButton from './styles/SickButton';
 import PropTypes from 'prop-types';
 const Permission = [ 'ADMIN', 'USER', 'ITEMCREATE', 'ITEMUPDATE', 'ITEMDELETE', 'PERMISSIONUPDATE' ];
 
+const UPDATE_PERMISSIONS_MUTATION = gql`
+	mutation updatedPermissions($permissions: [Permission], $userId: ID!) {
+		updatedPermission(permissions: $permissions, userId: $userId) {
+			id
+			name
+			permissions
+			email
+		}
+	}
+`;
 const ALL_USERS_QUERY = gql`
 	query {
 		users {
