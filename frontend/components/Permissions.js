@@ -49,7 +49,7 @@ const Permissions = props => (
                 <th>Name</th>
                 <th>Email</th>
                 {possiblePermissions.map(permission => <th key={permission}>{permission}</th>)}
-                <th>👇🏻</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>{data.users.map(user => <UserPermissions user={user} key={user.id} />)}</tbody>
@@ -72,7 +72,7 @@ class UserPermissions extends React.Component {
   state = {
     permissions: this.props.user.permissions,
   };
-  handlePermissionChange = (e) => {
+  handlePermissionChange = (e, updatePermissions) => {
     const checkbox = e.target;
     // take a copy of the current permissions
     let updatedPermissions = [...this.state.permissions];
@@ -84,8 +84,9 @@ class UserPermissions extends React.Component {
 		
       updatedPermissions = updatedPermissions.filter(permission => permission !== checkbox.value);
 	}
-	console.log(updatedPermissions)
+	//console.log(updatedPermissions)
      this.setState({ permissions: updatedPermissions });
+     updatePermissions();
   };
   render() {
     const user = this.props.user;
@@ -99,7 +100,7 @@ class UserPermissions extends React.Component {
       >
         {(updatePermissions, { loading, error }) => (
           <>
-            {error && <tr><td colspan="8"><Error error={error} /></td></tr>}
+            {error && <tr><td colSpan="8"><Error error={error} /></td></tr>}
             < tr >
               <td>{user.name}</td>
               <td>{user.email}</td>
@@ -111,7 +112,7 @@ class UserPermissions extends React.Component {
                       type="checkbox"
                       checked={this.state.permissions.includes(permission)}
                       value={permission}
-                      onChange={this.handlePermissionChange}
+                      onChange={(e)=>this.handlePermissionChange(e,updatePermissions)}
                     />
                   </label>
                 </td>
