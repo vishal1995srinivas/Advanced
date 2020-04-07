@@ -175,8 +175,21 @@ const Mutations = {
 		//2.Query the current user.
 		const currentUser = await ctx.db.query.user({ where: { id: ctx.request.userId }, info });
 		//3. Check they have permission to do this
-
+		hasPermission(currentUser, [ 'ADMIN', 'PERMISSIONUPDATE' ]);
 		//4. Update the permisssion
+		return ctx.db.mutation.updateUser(
+			{
+				data: {
+					permissions: {
+						set: args.permissions
+					}
+				},
+				where: {
+					id: args.userId
+				}
+			},
+			info
+		);
 	}
 };
 
