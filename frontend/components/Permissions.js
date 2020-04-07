@@ -58,17 +58,21 @@ class User extends Component {
 	}
 	handleOnChangePermission = (e) => {
 		//1. take a copy of the target
+
 		const checkbox = e.target;
 
 		//2. add Array of updated permission from state
-		const updatedPermission = [ ...this.state.permission ];
+		let updatedPermission = [ ...this.state.permission ];
 		//3. figure it out to add or remove the permission by checked
 		if (checkbox.checked) {
 			//add
 			updatedPermission.push(checkbox.value);
+		} else {
+			updatedPermission = updatedPermission.filter((permission) => permission !== checkbox.value);
 		}
-		console.log(updatedPermission);
 		//4. setstate
+		this.setState({ permission: updatedPermission });
+		console.log(updatedPermission);
 	};
 	render() {
 		const user = this.props.user;
@@ -80,6 +84,7 @@ class User extends Component {
 					<td key={permission}>
 						<label htmlFor={`${user.id}-permission-${permission}`}>
 							<input
+								id={`${user.id}-permission-${permission}`}
 								type="checkbox"
 								checked={this.state.permission.includes(permission)}
 								value={permission}
