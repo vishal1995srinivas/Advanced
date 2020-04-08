@@ -27,6 +27,7 @@ function createClient({ headers }) {
 							data: { cartOpen: !cartOpen }
 						};
 						cache.writeData(data);
+						return data;
 					}
 				}
 			},
