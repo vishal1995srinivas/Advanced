@@ -209,9 +209,13 @@ const Mutations = {
 	async addToCart(parent, args, ctx, info) {
 		//1. Make sure they are signed in
 		const { userId } = ctx.request;
-		if (!ctx.request.userId) {
-			throw new Error('You should be signed in soon');
-		}
+		// if (!ctx.request.userId) {
+		// 	throw new Error('You should be signed in soon');
+		// }
+		const [ existingCartItem ] = ctx.db.query.cartItems({
+			user: { id: userId },
+			item: { id: args.id }
+		});
 		//2. Query the users current cart.
 		//3. Check if that item is already in their cart and increment by 1 if it is.
 		//4. If its not , create a fresh cartItem for that user.
