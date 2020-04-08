@@ -23,7 +23,10 @@ function createClient({ headers }) {
 						const { cartOpen } = cache.readQuery({
 							query: LOCAL_STATE_QUERY
 						});
-						console.log(cartOpen);
+						const data = {
+							data: { cartOpen: !cartOpen }
+						};
+						cache.writeData(data);
 					}
 				}
 			},
