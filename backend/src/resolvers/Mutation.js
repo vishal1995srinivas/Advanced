@@ -225,6 +225,18 @@ const Mutations = {
 			});
 		}
 		//3. Check if that item is already in their cart and increment by 1 if it is.
+		return ctx.db.mutation.createCartItem({
+			data: {
+				user: {
+					connect: { id: userId }
+				},
+				item: {
+					connect: {
+						id: args.id
+					}
+				}
+			}
+		});
 		//4. If its not , create a fresh cartItem for that user.
 	}
 };
