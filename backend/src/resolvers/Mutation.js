@@ -25,7 +25,7 @@ const Mutations = {
 			info
 		);
 
-		console.log(item);
+		//console.log(item);
 		return item;
 	},
 	updateItem(parent, args, ctx, info) {
@@ -212,11 +212,18 @@ const Mutations = {
 		// if (!ctx.request.userId) {
 		// 	throw new Error('You should be signed in soon');
 		// }
-		const [ existingCartItem ] = ctx.db.query.cartItems({
+		const [ existingCartItem ] = await ctx.db.query.cartItems({
 			user: { id: userId },
 			item: { id: args.id }
 		});
 		//2. Query the users current cart.
+		if (existingCartItem) {
+			console.log('This item is already in their cart');
+			return ctx.db.mutation.updateCartItem({
+				where: { id: existingCartItem },
+				data: { quantity: existingCartItem.quantity + 1 }
+			});
+		}
 		//3. Check if that item is already in their cart and increment by 1 if it is.
 		//4. If its not , create a fresh cartItem for that user.
 	}
