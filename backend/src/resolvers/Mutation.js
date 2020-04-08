@@ -2,18 +2,19 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { randomBytes } = require('crypto');
 const { promisify } = require('util');
-const { hasPermission } = require('../utils');
 const { transport, makeANiceEmail } = require('../mail');
+const { hasPermission } = require('../utils');
 
 const Mutations = {
 	async createItem(parent, args, ctx, info) {
 		if (!ctx.request.userId) {
-			throw new Error('You must be logged in to perform this operation');
+			throw new Error('You must be logged in to do that!');
 		}
+
 		const item = await ctx.db.mutation.createItem(
 			{
 				data: {
-					//Providing data-relationship in prisma
+					// This is how to create a relationship between the Item and the User
 					user: {
 						connect: {
 							id: ctx.request.userId
@@ -25,7 +26,8 @@ const Mutations = {
 			info
 		);
 
-		//console.log(item);
+		console.log(item);
+
 		return item;
 	},
 	updateItem(parent, args, ctx, info) {
@@ -48,16 +50,16 @@ const Mutations = {
 		const where = { id: args.id };
 		// 1. find the item
 		const item = await ctx.db.query.item({ where }, `{ id title user { id }}`);
-		// TODO['DOG', 'CAT'].some(pet=>['BIRD','SNAKE'].includes(pet))return false
-		//['DOG', 'CAT'].some(pet=>['BIRD','SNAKE','CAT'].includes(pet))return true
 		// 2. Check if they own that item, or have the permissions
 		const ownsItem = item.user.id === ctx.request.userId;
 		const hasPermissions = ctx.request.user.permissions.some((permission) =>
 			[ 'ADMIN', 'ITEMDELETE' ].includes(permission)
 		);
+
 		if (!ownsItem && !hasPermissions) {
-			throw new Error("You don't have permissions to do that!");
+			throw new Error("You don't have permission to do that!");
 		}
+
 		// 3. Delete it!
 		return ctx.db.mutation.deleteItem({ where }, info);
 	},
@@ -126,17 +128,18 @@ const Mutations = {
 			where: { email: args.email },
 			data: { resetToken, resetTokenExpiry }
 		});
+		// 3. Email them that reset token
 		const mailRes = await transport.sendMail({
-			from: 'vishal1995srinivas@gmail.com',
+			from: 'wes@wesbos.com',
 			to: user.email,
-			subject: 'Your Password Reset token',
-			html: makeANiceEmail(`Your Password Reset token is here!
-			 \n\n
-			 <a href="${process.env.FRONTEND_URL}/reset?resetToken=${resetToken}">Click here to Reset<a>`)
+			subject: 'Your Password Reset Token',
+			html: makeANiceEmail(`Your Password Reset Token is here!
+      \n\n
+      <a href="${process.env.FRONTEND_URL}/reset?resetToken=${resetToken}">Click Here to Reset</a>`)
 		});
 
+		// 4. Return the message
 		return { message: 'Thanks!' };
-		// 3. Email them that reset token
 	},
 	async resetPassword(parent, args, ctx, info) {
 		// 1. check if the passwords match
@@ -212,16 +215,15 @@ const Mutations = {
 		if (!userId) {
 			throw new Error('You must be signed in soooon');
 		}
-		// 2. Query the users current cart
-		const [ existingCartItem ] = await ctx.db.query.cartItems(
-			{
-				where: {
-					user: { id: userId },
-					item: { id: args.id }
-				}
-			},
-			info
-		);
+
+		//2. Query the users current cart
+		const [ existingCartItem ] = await ctx.db.query.cartItems({
+			where: {
+				user: { id: userId },
+				item: { id: args.id }
+			}
+		});
+		console.log(existingCartItem);
 		// 3. Check if that item is already in their cart and increment by 1 if it is
 		if (existingCartItem) {
 			console.log('This item is already in their cart');
@@ -233,7 +235,20 @@ const Mutations = {
 				info
 			);
 		}
-		//4. If its not , create a fresh cartItem for that user.
+		// 4. If its not, create a fresh CartItem for that user!
+		return ctx.db.mutation.createCartItem(
+			{
+				data: {
+					user: {
+						connect: { id: userId }
+					},
+					item: {
+						connect: { id: args.id }
+					}
+				}
+			},
+			info
+		);
 	}
 };
 

@@ -16,9 +16,9 @@ type BatchPayload {
 
 type CartItem {
   id: ID!
-  item: Item!
-  user: User!
   quantity: Int!
+  item: Item
+  user: User!
 }
 
 type CartItemConnection {
@@ -29,9 +29,9 @@ type CartItemConnection {
 
 input CartItemCreateInput {
   id: ID
-  item: ItemCreateOneInput!
-  user: UserCreateOneWithoutCartInput!
   quantity: Int
+  item: ItemCreateOneInput
+  user: UserCreateOneWithoutCartInput!
 }
 
 input CartItemCreateManyWithoutUserInput {
@@ -41,8 +41,8 @@ input CartItemCreateManyWithoutUserInput {
 
 input CartItemCreateWithoutUserInput {
   id: ID
-  item: ItemCreateOneInput!
   quantity: Int
+  item: ItemCreateOneInput
 }
 
 type CartItemEdge {
@@ -109,9 +109,9 @@ input CartItemSubscriptionWhereInput {
 }
 
 input CartItemUpdateInput {
-  item: ItemUpdateOneRequiredInput
-  user: UserUpdateOneRequiredWithoutCartInput
   quantity: Int
+  item: ItemUpdateOneInput
+  user: UserUpdateOneRequiredWithoutCartInput
 }
 
 input CartItemUpdateManyDataInput {
@@ -140,8 +140,8 @@ input CartItemUpdateManyWithWhereNestedInput {
 }
 
 input CartItemUpdateWithoutUserDataInput {
-  item: ItemUpdateOneRequiredInput
   quantity: Int
+  item: ItemUpdateOneInput
 }
 
 input CartItemUpdateWithWhereUniqueWithoutUserInput {
@@ -170,8 +170,6 @@ input CartItemWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  item: ItemWhereInput
-  user: UserWhereInput
   quantity: Int
   quantity_not: Int
   quantity_in: [Int!]
@@ -180,6 +178,8 @@ input CartItemWhereInput {
   quantity_lte: Int
   quantity_gt: Int
   quantity_gte: Int
+  item: ItemWhereInput
+  user: UserWhereInput
   AND: [CartItemWhereInput!]
   OR: [CartItemWhereInput!]
   NOT: [CartItemWhereInput!]
@@ -303,10 +303,12 @@ input ItemUpdateManyMutationInput {
   price: Int
 }
 
-input ItemUpdateOneRequiredInput {
+input ItemUpdateOneInput {
   create: ItemCreateInput
   update: ItemUpdateDataInput
   upsert: ItemUpsertNestedInput
+  delete: Boolean
+  disconnect: Boolean
   connect: ItemWhereUniqueInput
 }
 
