@@ -207,36 +207,32 @@ const Mutations = {
 		);
 	},
 	async addToCart(parent, args, ctx, info) {
-		//1. Make sure they are signed in
+		// 1. Make sure they are signed in
 		const { userId } = ctx.request;
-		// if (!ctx.request.userId) {
-		// 	throw new Error('You should be signed in soon');
-		// }
-		const [ existingCartItem ] = await ctx.db.query.cartItems({
-			user: { id: userId },
-			item: { id: args.id }
-		});
-		//2. Query the users current cart.
+		if (!userId) {
+			throw new Error('You must be signed in soooon');
+		}
+		// 2. Query the users current cart
+		const [ existingCartItem ] = await ctx.db.query.cartItems(
+			{
+				where: {
+					user: { id: userId },
+					item: { id: args.id }
+				}
+			},
+			info
+		);
+		// 3. Check if that item is already in their cart and increment by 1 if it is
 		if (existingCartItem) {
 			console.log('This item is already in their cart');
-			return ctx.db.mutation.updateCartItem({
-				where: { id: existingCartItem },
-				data: { quantity: existingCartItem.quantity + 1 }
-			});
-		}
-		//3. Check if that item is already in their cart and increment by 1 if it is.
-		return ctx.db.mutation.createCartItem({
-			data: {
-				user: {
-					connect: { id: userId }
+			return ctx.db.mutation.updateCartItem(
+				{
+					where: { id: existingCartItem.id },
+					data: { quantity: existingCartItem.quantity + 1 }
 				},
-				item: {
-					connect: {
-						id: args.id
-					}
-				}
-			}
-		});
+				info
+			);
+		}
 		//4. If its not , create a fresh cartItem for that user.
 	}
 };

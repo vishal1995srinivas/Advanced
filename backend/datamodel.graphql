@@ -32,7 +32,7 @@ type Item {
 
 type CartItem {
 	id: ID! @id
-	Item: Item!
-	User: User!
+	item: Item!
+	user: User!
 	quantity: Int! @default(value: 1)
 }

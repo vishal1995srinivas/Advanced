@@ -16,8 +16,8 @@ type BatchPayload {
 
 type CartItem {
   id: ID!
-  Item: Item!
-  User: User!
+  item: Item!
+  user: User!
   quantity: Int!
 }
 
@@ -29,8 +29,8 @@ type CartItemConnection {
 
 input CartItemCreateInput {
   id: ID
-  Item: ItemCreateOneInput!
-  User: UserCreateOneWithoutCartInput!
+  item: ItemCreateOneInput!
+  user: UserCreateOneWithoutCartInput!
   quantity: Int
 }
 
@@ -41,7 +41,7 @@ input CartItemCreateManyWithoutUserInput {
 
 input CartItemCreateWithoutUserInput {
   id: ID
-  Item: ItemCreateOneInput!
+  item: ItemCreateOneInput!
   quantity: Int
 }
 
@@ -109,8 +109,8 @@ input CartItemSubscriptionWhereInput {
 }
 
 input CartItemUpdateInput {
-  Item: ItemUpdateOneRequiredInput
-  User: UserUpdateOneRequiredWithoutCartInput
+  item: ItemUpdateOneRequiredInput
+  user: UserUpdateOneRequiredWithoutCartInput
   quantity: Int
 }
 
@@ -140,7 +140,7 @@ input CartItemUpdateManyWithWhereNestedInput {
 }
 
 input CartItemUpdateWithoutUserDataInput {
-  Item: ItemUpdateOneRequiredInput
+  item: ItemUpdateOneRequiredInput
   quantity: Int
 }
 
@@ -170,8 +170,8 @@ input CartItemWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  Item: ItemWhereInput
-  User: UserWhereInput
+  item: ItemWhereInput
+  user: UserWhereInput
   quantity: Int
   quantity_not: Int
   quantity_in: [Int!]
