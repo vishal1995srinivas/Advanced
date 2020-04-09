@@ -21,7 +21,7 @@ class AddToCart extends React.Component {
 				variables={{
 					id
 				}}
-				refetchQueries={[ { query: CURRENT_USER_QUERY } ]}
+				refetchQueries={[ { query: CURRENT_USER_QUERY } ]} //refetches the item to cart by refetching current user query
 			>
 				{(addToCart, { loading }) => (
 					<button disabled={loading} onClick={addToCart}>
