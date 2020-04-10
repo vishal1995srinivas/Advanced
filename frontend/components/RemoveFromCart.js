@@ -22,6 +22,13 @@ const BigButton = styled.button`
 		cursor: pointer;
 	}
 `;
+update = (cache, payload) => {
+	//1. First read that from the cache.
+	//2. remove item from cache
+	//3. Rewrite to cache
+	const data = cache.readQuery({ query: CURRENT_USER_QUERY });
+	console.log(data);
+};
 
 class RemoveFromCart extends React.Component {
 	static propTypes = {
@@ -29,7 +36,7 @@ class RemoveFromCart extends React.Component {
 	};
 	render() {
 		return (
-			<Mutation mutation={REMOVE_FROM_CART_MUTATION} variables={{ id: this.props.id }}>
+			<Mutation mutation={REMOVE_FROM_CART_MUTATION} variables={{ id: this.props.id }} update={this.update}>
 				{(removeFromCart, { loading, error }) => (
 					<BigButton
 						disabled={loading}
