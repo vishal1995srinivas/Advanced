@@ -1,5 +1,6 @@
 import React from 'react';
 import gql from 'graphql-tag';
+import { adopt } from 'react-adopt';
 import { Query, Mutation } from 'react-apollo'; //Always place this on top.
 import User from './User';
 import CartStyle from './styles/CartStyles';
@@ -20,46 +21,43 @@ const TOGGLE_CART = gql`
 		toggleCart @client
 	}
 `;
+const Composed = adopt({
+	user: <User />,
+	toggleCart: <Mutation mutation={TOGGLE_CART} />,
+	localState: <Query query={LOCAL_STATE_QUERY} />
+});
 
 const Cart = () => (
-	<User>
-		{({ data: { me } }) => {
-			console.log(me);
+	<Composed>
+		{({ user, toggleCart, localState }) => {
+			const me = user.data.me;
 			if (!me) return null;
 			return (
-				<Mutation mutation={TOGGLE_CART}>
-					{(toggleCart) => (
-						<Query query={LOCAL_STATE_QUERY}>
-							{({ data }) => (
-								<CartStyle open={data.cartOpen}>
-									<header>
-										<CloseButton onClick={toggleCart} title="close">
-											&times;
-										</CloseButton>
-										<Supreme>{me.name}'s Cart</Supreme>
-										<p>
-											You have {me.cart.length} item{me.cart.length === 1 ? '' : 's'} in your Cart
-										</p>
-									</header>
-									<ul>
-										{me.cart.map((cartItem) => (
-											<CartItem key={cartItem.id} cartItem={cartItem}>
-												{cartItem.id}
-											</CartItem>
-										))}
-									</ul>
-									<footer>
-										<p>{FormatMoney(CalcTotalPrice(me.cart))}</p>
-										<SickButton>Checkout</SickButton>
-									</footer>
-								</CartStyle>
-							)}
-						</Query>
-					)}
-				</Mutation>
+				<CartStyle open={localState.data.cartOpen}>
+					<header>
+						<CloseButton onClick={toggleCart} title="close">
+							&times;
+						</CloseButton>
+						<Supreme>{me.name}'s Cart</Supreme>
+						<p>
+							You have {me.cart.length} item{me.cart.length === 1 ? '' : 's'} in your Cart
+						</p>
+					</header>
+					<ul>
+						{me.cart.map((cartItem) => (
+							<CartItem key={cartItem.id} cartItem={cartItem}>
+								{cartItem.id}
+							</CartItem>
+						))}
+					</ul>
+					<footer>
+						<p>{FormatMoney(CalcTotalPrice(me.cart))}</p>
+						<SickButton>Checkout</SickButton>
+					</footer>
+				</CartStyle>
 			);
 		}}
-	</User>
+	</Composed>
 );
 
 export default Cart;
