@@ -22,17 +22,19 @@ const BigButton = styled.button`
 		cursor: pointer;
 	}
 `;
-update = (cache, payload) => {
-	//1. First read that from the cache.
-	//2. remove item from cache
-	//3. Rewrite to cache
-	const data = cache.readQuery({ query: CURRENT_USER_QUERY });
-	console.log(data);
-};
 
 class RemoveFromCart extends React.Component {
 	static propTypes = {
 		id: PropTypes.string.isRequired
+	};
+	update = (cache, payload) => {
+		//1. First read that from the cache.
+		const data = cache.readQuery({ query: CURRENT_USER_QUERY });
+		console.log(data);
+		//2. remove item from cache
+		const RemovedCartItemId = payload.data.me.removeFromCart.id;
+		data.me.cart = data.me.cart.filter((cartItem) => cartItem.id !== RemovedCartItemId);
+		//3. Rewrite to cache
 	};
 	render() {
 		return (
