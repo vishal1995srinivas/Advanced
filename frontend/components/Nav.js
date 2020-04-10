@@ -28,7 +28,9 @@ const Nav = () => (
 						<Mutation mutation={TOGGLE_CART}>
 							{(toggleCart) => (
 								<button onClick={toggleCart}>
-									My Cart
+									My Cart<CartCount
+										count={me.cart.reduce((total, cartItem) => total + cartItem.quantity, 0)}
+									/>
 								</button>
 							)}
 						</Mutation>
