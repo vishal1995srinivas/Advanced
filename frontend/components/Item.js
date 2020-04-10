@@ -12,7 +12,7 @@ export default class Item extends Component {
 	static propTypes = {
 		item: PropTypes.object.isRequired
 	};
-
+	//Do Optimistic response for add to cart - similar to remove from cart *//
 	render() {
 		const { item } = this.props;
 		return (
