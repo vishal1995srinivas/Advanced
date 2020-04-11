@@ -60,14 +60,16 @@ class AutoComplete extends Component {
 									/>
 								)}
 							</ApolloConsumer>
-							<DropDown>
-								{this.state.items.map((item) => (
-									<DropDownItem key={item.id}>
-										<img width="50" height="50" src={item.image} />
-										{item.title}
-									</DropDownItem>
-								))}
-							</DropDown>
+							{isOpen && (
+								<DropDown>
+									{this.state.items.map((item) => (
+										<DropDownItem key={item.id}>
+											<img width="50" height="50" src={item.image} />
+											{item.title}
+										</DropDownItem>
+									))}
+								</DropDown>
+							)}
 						</div>
 					)}
 				</DownShift>
