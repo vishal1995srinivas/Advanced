@@ -13,12 +13,23 @@ const SEARCH_ITEMS_QUERY = gql`
 `;
 
 class AutoComplete extends Component {
+	onChange = (e, client) => {
+		console.log("I'm inside onchange", client);
+	};
 	render() {
 		return (
 			<SearchStyles>
 				<div>
 					<ApolloConsumer>
-						{(client) => <input type="search" onChange={() => console.log(client)} />}
+						{(client) => (
+							<input
+								type="search"
+								onChange={(e) => {
+									e.persist();
+									this.onChange(e, client);
+								}}
+							/>
+						)}
 					</ApolloConsumer>
 					<DropDown>
 						<p>Items will go here</p>
