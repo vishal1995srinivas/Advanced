@@ -17,7 +17,9 @@ class AutoComplete extends Component {
 		return (
 			<SearchStyles>
 				<div>
-					<input type="search" />
+					<ApolloConsumer>
+						{(client) => <input type="search" onChange={() => console.log(client)} />}
+					</ApolloConsumer>
 					<DropDown>
 						<p>Items will go here</p>
 					</DropDown>
