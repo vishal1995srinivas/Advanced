@@ -44,7 +44,7 @@ class AutoComplete extends Component {
 	render() {
 		return (
 			<SearchStyles>
-				<DownShift>
+				<DownShift itemToString={(item) => (item === null ? '' : item.title)}>
 					{({ getInputProps, getItemProps, isOpen, inputValue, highlightedIndex }) => (
 						<div>
 							<ApolloConsumer>
