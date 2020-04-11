@@ -17,13 +17,29 @@ const SEARCH_ITEMS_QUERY = gql`
 `;
 
 class AutoComplete extends Component {
-	onChange = async (e, client) => {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			loading: false,
+			items: []
+		};
+	}
+
+	onChange = debounce(async (e, client) => {
+		this.setState({
+			loading: true
+		});
+		//Manually query apollo client
 		const res = await client.query({
 			query: SEARCH_ITEMS_QUERY,
 			variables: { searchTerm: e.target.value }
 		});
-		console.log(res);
-	};
+		this.setState({
+			items: res.data.items,
+			loading: false
+		});
+	}, 350);
 	render() {
 		return (
 			<SearchStyles>
