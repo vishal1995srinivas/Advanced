@@ -35,7 +35,7 @@ class AutoComplete extends Component {
 			query: SEARCH_ITEMS_QUERY,
 			variables: { searchTerm: e.target.value }
 		});
-		console.log('Res is', res);
+		//console.log('Res is', res);
 		this.setState({
 			items: res.data.items,
 			loading: false
@@ -44,27 +44,33 @@ class AutoComplete extends Component {
 	render() {
 		return (
 			<SearchStyles>
-				<div>
-					<ApolloConsumer>
-						{(client) => (
-							<input
-								type="search"
-								onChange={(e) => {
-									e.persist();
-									this.onChange(e, client);
-								}}
-							/>
-						)}
-					</ApolloConsumer>
-					<DropDown>
-						{this.state.items.map((item) => (
-							<DropDownItem key={item.id}>
-								<img width="50" height="50" src={item.image} />
-								{item.title}
-							</DropDownItem>
-						))}
-					</DropDown>
-				</div>
+				<DownShift>
+					{({ getInputProps, getItemProps, isOpen, inputValue, highlightedIndex }) => (
+						<div>
+							<ApolloConsumer>
+								{(client) => (
+									<input
+										{...getInputProps({
+											type: 'search',
+											onChange: (e) => {
+												e.persist();
+												this.onChange(e, client);
+											}
+										})}
+									/>
+								)}
+							</ApolloConsumer>
+							<DropDown>
+								{this.state.items.map((item) => (
+									<DropDownItem key={item.id}>
+										<img width="50" height="50" src={item.image} />
+										{item.title}
+									</DropDownItem>
+								))}
+							</DropDown>
+						</div>
+					)}
+				</DownShift>
 			</SearchStyles>
 		);
 	}
