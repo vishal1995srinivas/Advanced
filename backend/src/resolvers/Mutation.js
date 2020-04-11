@@ -329,6 +329,14 @@ const Mutations = {
 			return orderItem;
 		});
 		//5. Create the order.
+		const order = await ctx.db.mutation.createOrder({
+			data: {
+				total: charge.amount,
+				charge: charge.id,
+				items: { create: orderItems },
+				user: { connect: { id: userId } }
+			}
+		});
 		//6. Clean up the users cart. delete cartitems.
 		//7. Return the order to the client.
 	}
