@@ -25,16 +25,17 @@ class AutoComplete extends Component {
 			items: []
 		};
 	}
-
 	onChange = debounce(async (e, client) => {
 		this.setState({
 			loading: true
 		});
+		console.log('Searching...');
 		//Manually query apollo client
 		const res = await client.query({
 			query: SEARCH_ITEMS_QUERY,
 			variables: { searchTerm: e.target.value }
 		});
+		console.log('Res is', res);
 		this.setState({
 			items: res.data.items,
 			loading: false
@@ -56,12 +57,16 @@ class AutoComplete extends Component {
 						)}
 					</ApolloConsumer>
 					<DropDown>
-						<p>Items will go here</p>
+						{this.state.items.map((item) => (
+							<DropDownItem key={item.id}>
+								<img width="50" height="50" src={item.image} />
+								{item.title}
+							</DropDownItem>
+						))}
 					</DropDown>
 				</div>
 			</SearchStyles>
 		);
 	}
 }
-
 export default AutoComplete;
