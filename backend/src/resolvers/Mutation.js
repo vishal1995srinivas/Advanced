@@ -27,7 +27,7 @@ const Mutations = {
 			info
 		);
 
-		console.log(item);
+		//console.log(item);
 
 		return item;
 	},
