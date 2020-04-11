@@ -8,13 +8,17 @@ import { DropDown, DropDownItem, SearchStyles } from './styles/DropDown';
 
 const SEARCH_ITEMS_QUERY = gql`
 	query SEARCH_ITEMS_QUERY($searchTerm: String!) {
-		item(where: { OR: [{ title_contains: $searchTerm }, { descriptions_contains: $searchTerm }] })
+		items(where: { OR: [{ title_contains: $searchTerm }, { descriptions_contains: $searchTerm }] })
 	}
 `;
 
 class AutoComplete extends Component {
-	onChange = (e, client) => {
-		console.log("I'm inside onchange", client);
+	onChange = async (e, client) => {
+		const res = await client.query({
+			query: SEARCH_ITEMS_QUERY,
+			variables: { searchTerm: e.target.value }
+		});
+		console.log(res);
 	};
 	render() {
 		return (
