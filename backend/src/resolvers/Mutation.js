@@ -300,6 +300,7 @@ const Mutations = {
 		//2. Recalcalculate the total price. (I have instances where users changing client side javascript to 1cent and checking out.).
 		const amount = user.cart.reduce((tally, cartItem) => tally + cartItem.item.price * cartItem.quantity, 0);
 		console.log(`Going to charge for a total of ${amount}`);
+		//3. Create the stripe charge.(turn token into money)
 		const charge = await stripe.charges.create({
 			amount: amount,
 			currency: 'USD',
@@ -317,9 +318,16 @@ const Mutations = {
 			}
 		});
 
-		//3. Create the stripe charge.(turn token into money)
-
 		//4. Convert the cartITems to OrderItems.
+		const orderItems = user.cart.map((cartItem) => {
+			const orderItem = {
+				...cartItem.item,
+				quantity: cartItem.quantity,
+				user: { connect: { id: userId } }
+			};
+			delete orderItem.id;
+			return orderItem;
+		});
 		//5. Create the order.
 		//6. Clean up the users cart. delete cartitems.
 		//7. Return the order to the client.
