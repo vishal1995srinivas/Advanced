@@ -66,7 +66,7 @@ class AutoComplete extends Component {
 										<DropDownItem
 											{...getItemProps({ item })}
 											key={item.id}
-											highlightedIndex={index === highlightedIndex}
+											highlighted={index === highlightedIndex}
 										>
 											<img width="50" height="50" src={item.image} alt={item.image} />
 											{item.title}
