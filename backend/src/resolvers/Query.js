@@ -32,7 +32,7 @@ const Query = {
 	async order(parent, args, ctx, info) {
 		// 1. Make sure they are logged in
 		if (!ctx.request.userId) {
-			throw new Error('You arent logged in!');
+			throw new Error("You aren'st logged in!");
 		}
 		// 2. Query the current order
 		const order = await ctx.db.query.order(
@@ -45,7 +45,7 @@ const Query = {
 		const ownsOrder = order.user.id === ctx.request.userId;
 		const hasPermissionToSeeOrder = ctx.request.user.permissions.includes('ADMIN');
 		if (!ownsOrder && !hasPermissionToSeeOrder) {
-			throw new Error('You cant see this buddd');
+			throw new Error('You cant see this');
 		}
 		// 4. Return the order
 		return order;
