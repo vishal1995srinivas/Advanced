@@ -329,27 +329,27 @@ const Mutations = {
 			delete orderItem.id;
 			return orderItem;
 		});
-		console.log(orderItems);
+		// console.log(orderItems);
 		//5. Create the order.
-		// const order = await ctx.db.mutation.createOrder({
-		// 	data: {
-		// 		total: charge.amount,
-		// 		charge: charge.id,
-		// 		items: { create: orderItems },
-		// 		user: { connect: { id: userId } }
-		// 	}
-		// });
+		const order = await ctx.db.mutation.createOrder({
+			data: {
+				total: charge.amount,
+				charge: charge.id,
+				items: { create: orderItems },
+				user: { connect: { id: userId } }
+			}
+		});
 		// console.log(order);
 
-		// //6. Clean up the users cart. delete cartitems.
-		// const cartItemIds = user.cart.map((cartItem) => cartItem.id);
-		// await ctx.db.mutation.deleteManyCartItems({
-		// 	where: {
-		// 		id_in: cartItemIds
-		// 	}
-		// });
-		// //7. Return the order to the client.
-		// return order;
+		//6. Clean up the users cart. delete cartitems.
+		const cartItemIds = user.cart.map((cartItem) => cartItem.id);
+		await ctx.db.mutation.deleteManyCartItems({
+			where: {
+				id_in: cartItemIds
+			}
+		});
+		//7. Return the order to the client.
+		return order;
 	}
 };
 
