@@ -509,6 +509,7 @@ type OrderItem {
   image: String
   largeImage: String
   price: Int!
+  quantity: Int!
   user: User!
 }
 
@@ -525,6 +526,7 @@ input OrderItemCreateInput {
   image: String
   largeImage: String
   price: Int!
+  quantity: Int
   user: UserCreateOneInput!
 }
 
@@ -551,6 +553,8 @@ enum OrderItemOrderByInput {
   largeImage_DESC
   price_ASC
   price_DESC
+  quantity_ASC
+  quantity_DESC
 }
 
 type OrderItemPreviousValues {
@@ -560,6 +564,7 @@ type OrderItemPreviousValues {
   image: String
   largeImage: String
   price: Int!
+  quantity: Int!
 }
 
 input OrderItemScalarWhereInput {
@@ -641,6 +646,14 @@ input OrderItemScalarWhereInput {
   price_lte: Int
   price_gt: Int
   price_gte: Int
+  quantity: Int
+  quantity_not: Int
+  quantity_in: [Int!]
+  quantity_not_in: [Int!]
+  quantity_lt: Int
+  quantity_lte: Int
+  quantity_gt: Int
+  quantity_gte: Int
   AND: [OrderItemScalarWhereInput!]
   OR: [OrderItemScalarWhereInput!]
   NOT: [OrderItemScalarWhereInput!]
@@ -670,6 +683,7 @@ input OrderItemUpdateDataInput {
   image: String
   largeImage: String
   price: Int
+  quantity: Int
   user: UserUpdateOneRequiredInput
 }
 
@@ -679,6 +693,7 @@ input OrderItemUpdateInput {
   image: String
   largeImage: String
   price: Int
+  quantity: Int
   user: UserUpdateOneRequiredInput
 }
 
@@ -688,6 +703,7 @@ input OrderItemUpdateManyDataInput {
   image: String
   largeImage: String
   price: Int
+  quantity: Int
 }
 
 input OrderItemUpdateManyInput {
@@ -708,6 +724,7 @@ input OrderItemUpdateManyMutationInput {
   image: String
   largeImage: String
   price: Int
+  quantity: Int
 }
 
 input OrderItemUpdateManyWithWhereNestedInput {
@@ -805,6 +822,14 @@ input OrderItemWhereInput {
   price_lte: Int
   price_gt: Int
   price_gte: Int
+  quantity: Int
+  quantity_not: Int
+  quantity_in: [Int!]
+  quantity_not_in: [Int!]
+  quantity_lt: Int
+  quantity_lte: Int
+  quantity_gt: Int
+  quantity_gte: Int
   user: UserWhereInput
   AND: [OrderItemWhereInput!]
   OR: [OrderItemWhereInput!]

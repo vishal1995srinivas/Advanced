@@ -293,11 +293,12 @@ const Mutations = {
 						id
 						description
 						image
+						largeImage
 					}
 				}
 			}`
 		);
-		//2. Recalcalculate the total price. (I have instances where users changing client side javascript to 1cent and checking out.).
+		//2. Re-calcalculate the total price. (I have instances where users changing client side javascript to 1cent and checking out.).
 		const amount = user.cart.reduce((tally, cartItem) => tally + cartItem.item.price * cartItem.quantity, 0);
 		console.log(`Going to charge for a total of ${amount}`);
 		//3. Create the stripe charge.(turn token into money)
@@ -328,17 +329,27 @@ const Mutations = {
 			delete orderItem.id;
 			return orderItem;
 		});
+		console.log(orderItems);
 		//5. Create the order.
-		const order = await ctx.db.mutation.createOrder({
-			data: {
-				total: charge.amount,
-				charge: charge.id,
-				items: { create: orderItems },
-				user: { connect: { id: userId } }
-			}
-		});
-		//6. Clean up the users cart. delete cartitems.
-		//7. Return the order to the client.
+		// const order = await ctx.db.mutation.createOrder({
+		// 	data: {
+		// 		total: charge.amount,
+		// 		charge: charge.id,
+		// 		items: { create: orderItems },
+		// 		user: { connect: { id: userId } }
+		// 	}
+		// });
+		// console.log(order);
+
+		// //6. Clean up the users cart. delete cartitems.
+		// const cartItemIds = user.cart.map((cartItem) => cartItem.id);
+		// await ctx.db.mutation.deleteManyCartItems({
+		// 	where: {
+		// 		id_in: cartItemIds
+		// 	}
+		// });
+		// //7. Return the order to the client.
+		// return order;
 	}
 };
 
