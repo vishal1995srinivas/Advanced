@@ -1,4 +1,9 @@
+import OrderList from '../components/OrderList';
 const orders = (props) => {
-	return <div>Orders.</div>;
+	return (
+		<div>
+			<OrderList />
+		</div>
+	);
 };
 export default orders;
