@@ -41,7 +41,15 @@ const Query = {
 			},
 			info
 		);
-	}
+		// 3. Check if the have the permissions to see this order
+		const ownsOrder = order.user.id === ctx.request.userId;
+		const hasPermissionToSeeOrder = ctx.request.user.permissions.includes('ADMIN');
+		if (!ownsOrder && !hasPermissionToSeeOrder) {
+			throw new Error('You cant see this buddd');
+		}
+		// 4. Return the order
+		return order;
+	},
 	//   // 3. Check if the have the permissions to see this order
 	//   const ownsOrder = order.user.id === ctx.request.userId;
 	//   const hasPermissionToSeeOrder = ctx.request.user.permissions.includes('ADMIN');
@@ -51,20 +59,20 @@ const Query = {
 	//   // 4. Return the order
 	//   return order;
 	// },
-	// async orders(parent, args, ctx, info) {
-	//   const { userId } = ctx.request;
-	//   if (!userId) {
-	//     throw new Error('you must be signed in!');
-	//   }
-	//   return ctx.db.query.orders(
-	//     {
-	//       where: {
-	//         user: { id: userId },
-	//       },
-	//     },
-	//     info
-	//   );
-	// },
+	async orders(parent, args, ctx, info) {
+		const { userId } = ctx.request;
+		if (!userId) {
+			throw new Error('you must be signed in!');
+		}
+		return ctx.db.query.orders(
+			{
+				where: {
+					user: { id: userId }
+				}
+			},
+			info
+		);
+	}
 };
 
 module.exports = Query;
