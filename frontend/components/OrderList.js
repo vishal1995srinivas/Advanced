@@ -49,7 +49,20 @@ class OrderList extends Component {
 												query: { id: order.id }
 											}}
 										>
-											<p>dsdsd</p>
+											<a>
+												<div className="order-meta">
+													<p>{order.items.reduce((a, b) => a + b.quantity, 0)} Items</p>
+													<p>{formatDistance(order.createdAt, new Date())}</p>
+													<p>{formatMoney(order.total)}</p>
+												</div>
+												{
+													<div className="images">
+														{order.items.map((item) => (
+															<img key={item.id} src={item.image} alt={item.title} />
+														))}
+													</div>
+												}
+											</a>
 										</Link>
 									</OrderItemStyles>
 								))}
