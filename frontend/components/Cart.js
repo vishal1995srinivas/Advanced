@@ -52,9 +52,11 @@ const Cart = () => (
 					</ul>
 					<footer>
 						<p>{FormatMoney(CalcTotalPrice(me.cart))}</p>
-						<TakeMyMoney>
-							<SickButton>Checkout</SickButton>
-						</TakeMyMoney>
+						{me.cart.length && ( // this can be me.cart[0]
+							<TakeMyMoney>
+								<SickButton>Checkout</SickButton>
+							</TakeMyMoney>
+						)}
 					</footer>
 				</CartStyle>
 			);
