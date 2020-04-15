@@ -3,12 +3,12 @@ function Person(name, foods) {
 	this.foods = foods;
 }
 
-Person.prototype.fetchFavFoods = function() {
-	return new Promise((resolve, reject) => {
-		//Simulating an api
-		setTimeout(() => resolve(this.foods), 2000);
-	});
-};
+// Person.prototype.fetchFavFoods = function() {
+// 	return new Promise((resolve, reject) => {
+// 		//Simulating an api
+// 		setTimeout(() => resolve(this.foods), 2000);
+// 	});
+// };
 
 describe('mocking learning', () => {
 	it('mocks a reg function', () => {
@@ -22,7 +22,9 @@ describe('mocking learning', () => {
 
 	it('can create a person', async () => {
 		const me = new Person('Vis', [ 'pizza', 'burgers' ]);
+		//mock the fav foods
+		me.fetchFavFoods = jest.fn().mockResolvedValue([ 'sushi', 'ramen' ]);
 		const favFoods = await me.fetchFavFoods();
-		expect(favFoods).toContain('pizza');
+		expect(favFoods).toContain('sushi');
 	});
 });
