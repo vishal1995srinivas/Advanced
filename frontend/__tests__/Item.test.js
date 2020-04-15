@@ -13,6 +13,8 @@ const fakeItem = {
 describe('<Item/>', () => {
 	it('renders and displays properly', () => {
 		const wrapper = shallow(<ItemComponent item={fakeItem} />);
-		console.log(wrapper.debug());
+		const PriceTag = wrapper.find('PriceTag');
+		console.log(PriceTag.children());
+		console.log(PriceTag.debug());
 	});
 });
