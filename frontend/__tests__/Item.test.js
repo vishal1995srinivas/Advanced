@@ -1,6 +1,12 @@
 import ItemComponent from '../components/Item';
 import { shallow } from 'enzyme';
-
+import toJSON from 'enzyme-to-json';
+//SNAPSHOT TESTING:
+// the tests going to git repo..
+// whenever you commit a new change..
+//automatically pull request is created ,
+// this helps the reviewer to go through
+// changes and commit the necessary.
 const fakeItem = {
 	id: 'ABC123',
 	title: 'A Cool item',
@@ -40,6 +46,6 @@ const fakeItem = {
 describe('<Item/>', () => {
 	it('renders and matched the component', () => {
 		const wrapper = shallow(<ItemComponent item={fakeItem} />);
-		expect(wrapper).toMatchSnapshot();
+		expect(toJSON(wrapper)).toMatchSnapshot();
 	});
 });
