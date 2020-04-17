@@ -22,11 +22,11 @@ const CREATE_ITEM_MUTATION = gql`
 //ToDo: Disable submit button (OR (Show progress bar)) until image and largeimage url arrive from cloudinary. User clicking submit immediately after uploading images might be a problem here.
 class CreateItem extends Component {
 	state = {
-		title: 'Cool Shoes',
-		description: 'I love those shoes',
-		image: 'dog.jpg',
-		largeImage: 'large-dog.jpg',
-		price: 1000
+		title: '',
+		description: '',
+		image: '',
+		largeImage: '',
+		price: 0
 	};
 	handleChange = (e) => {
 		const { name, type, value } = e.target;
@@ -34,7 +34,7 @@ class CreateItem extends Component {
 		this.setState({ [name]: val });
 	};
 	uploadFile = async (e) => {
-		console.log('Uploading File');
+		//console.log('Uploading File');
 		const files = e.target.files;
 		const data = new FormData();
 		data.append('file', files[0]);
@@ -44,7 +44,7 @@ class CreateItem extends Component {
 			body: data
 		});
 		const file = await res.json();
-		console.log(file);
+		//console.log(file);
 		this.setState({
 			image: file.secure_url,
 			largeImage: file.eager[0].secure_url
@@ -55,6 +55,7 @@ class CreateItem extends Component {
 			<Mutation mutation={CREATE_ITEM_MUTATION} variables={this.state}>
 				{(createItem, { loading, error }) => (
 					<Form
+						data-test="form"
 						onSubmit={async (e) => {
 							// Stop the form from submitting
 							e.preventDefault();
