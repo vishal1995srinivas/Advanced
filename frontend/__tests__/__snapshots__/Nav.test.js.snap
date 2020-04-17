@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Nav/> renders a minimal nav when signed out 1`] = `
+<ul
+  className="NavStyles-sc-11c0d2g-0 iTUtFG"
+  data-test="nav"
+>
+  <Link
+    href="/Items"
+  >
+    <a
+      href="/Items"
+      onClick={[Function]}
+    >
+      Shop
+    </a>
+  </Link>
+  <Link
+    href="/signup"
+  >
+    <a
+      href="/signup"
+      onClick={[Function]}
+    >
+      SignIn
+    </a>
+  </Link>
+</ul>
+`;
