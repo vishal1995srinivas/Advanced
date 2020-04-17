@@ -5,6 +5,11 @@ import Router from 'next/router';
 import Pagination, { PAGINATION_QUERY } from '../components/Pagination';
 import { MockedProvider } from 'react-apollo/test-utils';
 
+Router.router = {
+	push() {},
+	prefetch() {}
+};
+
 function makeMocksFor(length) {
 	return [
 		{
@@ -33,4 +38,31 @@ describe('<Pagination/>', () => {
 		const pagination = wrapper.find('[data-test="pagination"]');
 		expect(wrapper.text()).toContain('Loading...');
 	});
+	it('renders a pagination for 18 items', async () => {
+		const wrapper = mount(
+			<MockedProvider mocks={makeMocksFor(18)}>
+				<Pagination page={1} />
+			</MockedProvider>
+		);
+		await wait();
+		wrapper.update();
+		//console.log(wrapper.debug());
+		const pagination = wrapper.find('div[data-test="pagination"]');
+
+		expect(toJSON(pagination)).toMatchSnapshot();
+		//expect(wrapper.find('.totalPages').text()).toEqual(' 5');
+	});
+	it('disables prev button on first page', async () => {
+		const wrapper = mount(
+			<MockedProvider mocks={makeMocksFor(18)}>
+				<Pagination page={1} />
+			</MockedProvider>
+		);
+		await wait();
+		wrapper.update();
+		expect(wrapper.find('a.prev').prop('aria-disabled')).toEqual(true);
+		expect(wrapper.find('a.next').prop('aria-disabled')).toEqual(false);
+	});
+	it('disables next button on last page', () => {});
+	it('enables all button on middle page', () => {});
 });
