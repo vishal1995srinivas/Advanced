@@ -33,17 +33,17 @@ describe('<Nav/>', () => {
 		console.log(nav.debug());
 		expect(toJSON(nav)).toMatchSnapshot();
 	});
-	// it('renders a full nav when signed in', async () => {
-	// 	const wrapper = mount(
-	// 		<MockedProvider mocks={signedInMocks}>
-	// 			<Nav />
-	// 		</MockedProvider>
-	// 	);
-	// 	await wait();
-	// 	wrapper.update();
-	// 	//console.log(wrapper.debug());
-	// 	const nav = wrapper.find("ul[data-test='nav']");
-	// 	console.log(nav.debug());
-	// 	expect(nav.children().length).toBe(6);
-	// });
+	it('renders a full nav when signed in', async () => {
+		const wrapper = mount(
+			<MockedProvider mocks={signedInMocks}>
+				<Nav />
+			</MockedProvider>
+		);
+		await wait();
+		wrapper.update();
+		//console.log(wrapper.debug());
+		const nav = wrapper.find("ul[data-test='nav']");
+		console.log(nav.debug());
+		expect(nav.children().length).toBe(6);
+	});
 });
