@@ -43,7 +43,8 @@ describe('<Nav/>', () => {
 		wrapper.update();
 		//console.log(wrapper.debug());
 		const nav = wrapper.find("ul[data-test='nav']");
-		console.log(nav.debug());
-		expect(nav.children().length).toBe(6);
+		const count = nav.find('div.count');
+		expect(toJSON(count)).toMatchSnapshot();
+		//console.log(count.debug());
 	});
 });
