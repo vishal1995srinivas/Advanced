@@ -30,7 +30,7 @@ describe('<Nav/>', () => {
 		wrapper.update();
 		//console.log(wrapper.debug());
 		const nav = wrapper.find("ul[data-test='nav']");
-		console.log(nav.debug());
+		//console.log(nav.debug());
 		expect(toJSON(nav)).toMatchSnapshot();
 	});
 	it('renders a full nav when signed in', async () => {

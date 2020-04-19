@@ -46,26 +46,30 @@ class TakeMyMoney extends Component {
 	render() {
 		return (
 			<User>
-				{({ data: { me } }) => (
-					<Mutation mutation={CURRENT_ORDER_MUTATION} refetchQueries={[ { query: CURRENT_USER_QUERY } ]}>
-						{(createOrder) => (
-							<StripeCheckout //Provide as much info possible so that chances of declining is low.
-								currency="USD"
-								stripeKey="pk_test_556JXNBdRYtNmeVoBl4VsXCH00jHsLusuc"
-								amount={calcTotalPrice(me.cart)}
-								name="Sick-fits Online Store"
-								image={me.cart[0] && me.cart[0].item.image} //me.cart.length && me.cart[0].item && me.cart[0].item.image
-								description={`Order of ${TotalItems(me.cart)}`}
-								token={(res) => this.onToken(res, createOrder)}
-							>
-								{this.props.children}
-							</StripeCheckout>
-						)}
-					</Mutation>
-				)}
+				{({ data: { me }, loading }) => {
+					if (loading) return null;
+					return (
+						<Mutation mutation={CURRENT_ORDER_MUTATION} refetchQueries={[ { query: CURRENT_USER_QUERY } ]}>
+							{(createOrder) => (
+								<StripeCheckout //Provide as much info possible so that chances of declining is low.
+									currency="USD"
+									stripeKey="pk_test_556JXNBdRYtNmeVoBl4VsXCH00jHsLusuc"
+									amount={calcTotalPrice(me.cart)}
+									name="Sick-fits Online Store"
+									image={me.cart[0] && me.cart[0].item.image} //me.cart.length && me.cart[0].item && me.cart[0].item.image
+									description={`Order of ${TotalItems(me.cart)}`}
+									token={(res) => this.onToken(res, createOrder)}
+								>
+									{this.props.children}
+								</StripeCheckout>
+							)}
+						</Mutation>
+					);
+				}}
 			</User>
 		);
 	}
 }
 
 export default TakeMyMoney;
+export { CURRENT_ORDER_MUTATION };

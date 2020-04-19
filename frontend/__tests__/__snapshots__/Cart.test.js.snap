@@ -30,5 +30,3 @@ exports[`<Cart/> renders and matches snappy 1`] = `
   </p>
 </header>
 `;
-
-exports[`<Cart/> renders and matches the snapshot 1`] = `null`;
