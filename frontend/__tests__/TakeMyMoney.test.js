@@ -52,4 +52,21 @@ describe('<TakeMyMoney/>', () => {
 		expect(createOrderMock).toHaveBeenCalled();
 		expect(createOrderMock).toHaveBeenCalledWith({ variables: { token: 'abc123' } });
 	});
+	it('turns the progress bar on', async () => {
+		const wrapper = mount(
+			<MockedProvider mocks={mocks}>
+				<TakeMyMoney />
+			</MockedProvider>
+		);
+		await wait();
+		wrapper.update();
+		NProgress.start = jest.fn();
+		const createOrderMock = jest.fn().mockResolvedValue({
+			data: { createOrder: { id: 'xyz789' } }
+		});
+		const component = wrapper.find('TakeMyMoney').instance();
+
+		component.onToken({ id: 'abc123' }, createOrderMock);
+		expect(NProgress.start).toHaveBeenCalled();
+	});
 });
