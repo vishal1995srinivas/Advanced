@@ -54,6 +54,7 @@ describe('<AddToCart/>', () => {
 		wrapper.update();
 		expect(toJSON(wrapper.find('button'))).toMatchSnapshot();
 	});
+
 	it('adds an item to cart when clicked', async () => {
 		let apolloClient;
 		const wrapper = mount(
@@ -73,10 +74,10 @@ describe('<AddToCart/>', () => {
 		expect(me.cart).toHaveLength(0);
 		// add an item to the cart
 		wrapper.find('button').simulate('click');
-		await wait(10);
+		await wait(20);
 		// check if the item is in the cart
 		const { data: { me: me2 } } = await apolloClient.query({ query: CURRENT_USER_QUERY });
-		//console.log(me2);
+		// console.log(me2);
 		expect(me2.cart).toHaveLength(1);
 		expect(me2.cart[0].id).toBe('omg123');
 		expect(me2.cart[0].quantity).toBe(3);
