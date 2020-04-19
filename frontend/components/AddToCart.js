@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import { CURRENT_USER_QUERY } from './User';
@@ -12,7 +12,7 @@ const ADD_TO_CART_MUTATION = gql`
 	}
 `;
 
-class AddToCart extends React.Component {
+class AddToCart extends Component {
 	render() {
 		const { id } = this.props;
 		return (
@@ -21,7 +21,7 @@ class AddToCart extends React.Component {
 				variables={{
 					id
 				}}
-				refetchQueries={[ { query: CURRENT_USER_QUERY } ]} //refetches the item to cart by refetching current user query
+				refetchQueries={[ { query: CURRENT_USER_QUERY } ]}
 			>
 				{(addToCart, { loading }) => (
 					<button disabled={loading} onClick={addToCart}>
