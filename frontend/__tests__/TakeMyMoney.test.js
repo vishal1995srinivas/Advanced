@@ -69,4 +69,23 @@ describe('<TakeMyMoney/>', () => {
 		component.onToken({ id: 'abc123' }, createOrderMock);
 		expect(NProgress.start).toHaveBeenCalled();
 	});
+	it('routes to the order page when completed', async () => {
+		const wrapper = mount(
+			<MockedProvider mocks={mocks}>
+				<TakeMyMoney />
+			</MockedProvider>
+		);
+		await wait();
+		wrapper.update();
+		const createOrderMock = jest.fn().mockResolvedValue({
+			data: { createOrder: { id: 'xyz789' } }
+		});
+		const component = wrapper.find('TakeMyMoney').instance();
+		Router.router.push = jest.fn();
+		// manully call that onToken method
+		component.onToken({ id: 'abc123' }, createOrderMock);
+		await wait();
+		expect(Router.router.push).toHaveBeenCalled();
+		expect(Router.router.push).toHaveBeenCalledWith({ pathname: '/order', query: { id: 'xyz789' } });
+	});
 });
