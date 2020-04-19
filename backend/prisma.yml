@@ -1,6 +1,7 @@
-endpoint: ${env:PRISMA_ENDPOINT}
+#endpoint: ${env:PRISMA_ENDPOINT}
+endpoint: https://sik-fits-production-e7fc27b765.herokuapp.com/sick-fits-prod/prod
 datamodel: datamodel.graphql
-# secret : ${env:PRISMA_SECRET}
+secret : ${env:PRISMA_SECRET}
 generate :
   - generator: graphql-schema
     output: ./src/generated/prisma.graphql
